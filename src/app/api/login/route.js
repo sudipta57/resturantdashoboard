@@ -7,16 +7,7 @@ export async function POST(req, res) {
 
   const body = await req.json();
   const { email, password } = body;
-  if (!email || !password) {
-    return NextResponse.json(
-      {
-        error: "Please fill all the data",
-      },
-      {
-        status: 400,
-      }
-    );
-  }
+
   try {
     const userExist = await ResturantInfo.findOne({
       email: email,

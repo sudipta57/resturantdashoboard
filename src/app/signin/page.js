@@ -57,6 +57,19 @@ const Signin = () => {
   const HandleLogin = async (e) => {
     e.preventDefault();
     const { email, password } = forminfo;
+    if (!email || !password) {
+      return toast.warn("please fill all the data", {
+        position: "top-right",
+        autoClose: 1500,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        transition: Bounce,
+      });
+    }
 
     try {
       const res = await fetch("api/login", {
