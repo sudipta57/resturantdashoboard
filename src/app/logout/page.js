@@ -9,24 +9,22 @@ const Page = () => {
   const { setIslogin } = useContext(loginContext);
 
   useEffect(() => {
-    return () => {
-      router.push("/signin");
-      toast.success("Resturant Logged out successful", {
-        position: "top-right",
-        autoClose: 1500,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-        transition: Bounce,
-      });
-      setIslogin(false);
-    };
+    router.push("/signin");
+    toast.success("Resturant Logged out successful", {
+      position: "top-right",
+      autoClose: 1500,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+      transition: Bounce,
+    });
+    setIslogin(false);
   }, []);
 
-  return <div>Logggin out</div>;
+  return <center>Logggin out</center>;
 };
 
 export default Page;
