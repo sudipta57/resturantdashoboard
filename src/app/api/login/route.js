@@ -20,26 +20,17 @@ export async function POST(req, res) {
         }
       );
     }
-
     if (userExist.password === password) {
-      return NextResponse.json(
-        {
-          message: "User Logged in Successful",
-        },
-        {
-          status: 200,
-        }
-      );
+      res.status(200).json({
+        message: "User Logged in Successful",
+      });
     } else {
-      // Password doesn't match
-      return NextResponse.json(
-        { error: "Invalid email or password" },
-        {
-          status: 401,
-        }
-      );
+      res.status(401).json({
+        error: "Invalid email or password",
+      });
     }
   } catch (error) {
+    console.error(error);
     return NextResponse.json(
       {
         error: "internal server error",
