@@ -21,13 +21,23 @@ export async function POST(req, res) {
       );
     }
     if (userExist.password === password) {
-      res.status(200).json({
-        message: "User Logged in Successful",
-      });
+      return NextResponse.json(
+        {
+          message: "User Logged in Successful",
+        },
+        {
+          status: 200,
+        }
+      );
     } else {
-      res.status(401).json({
-        error: "Invalid email or password",
-      });
+      return NextResponse.json(
+        {
+          error: "Invalid email or password",
+        },
+        {
+          status: 401,
+        }
+      );
     }
   } catch (error) {
     console.error(error);
