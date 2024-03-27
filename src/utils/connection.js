@@ -15,24 +15,14 @@ const dbConnect = async () => {
     return cached.conn;
   }
 
-  // If a connection does not exist, we check if a promise is already in progress. If a promise is already in progress, we wait for it to resolve to get the connection
   if (!cached.promise) {
-    const opts = {
-      bufferCommands: false,
-    };
-
-    cached.promise = mongoose.connect(connecttionStr, opts).then((mongoose) => {
+    cached.promise = mongoose.connect(connecttionStr).then((mongoose) => {
       console.log("db connected successfully");
       return mongoose;
     });
   }
 
-  try {
-    cached.conn = await cached.promise;
-  } catch (e) {
-    cached.promise = null;
-    throw e;
-  }
+  cached.conn = await cached.promise;
   return cached.conn;
 };
 
