@@ -7,7 +7,7 @@ import { loginContext } from "../layout";
 const Signin = () => {
   const router = useRouter();
   const [isChecked, setIsChecked] = useState(false);
-  const { islogin, setIslogin } = useContext(loginContext);
+  const { setIslogin } = useContext(loginContext);
   const [forminfo, setforminfo] = useState({
     resturantName: "",
     email: "",

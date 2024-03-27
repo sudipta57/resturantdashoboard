@@ -1,7 +1,10 @@
 import ResturantInfo from "@/models/resturantinfo";
+import dbConnect from "@/utils/connection";
 import { NextResponse } from "next/server";
 
 export async function POST(req, res) {
+  dbConnect();
+
   const body = await req.json();
   const { email, password } = body;
   if (!email || !password) {
