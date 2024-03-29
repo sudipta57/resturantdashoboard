@@ -125,6 +125,7 @@ const Fooditem = () => {
                   <Flex justify="space-between" className="py-6">
                     <FormLabel>Add Food_Catagory :</FormLabel>
                     <Input
+                      value={formData.foodcat}
                       type="text"
                       maxW="400px"
                       required
@@ -141,6 +142,7 @@ const Fooditem = () => {
                     <FormLabel>Add Food_Name :</FormLabel>
                     <Input
                       type="text"
+                      value={formData.foodname}
                       maxW="400px"
                       required
                       name="foodname"
@@ -155,6 +157,7 @@ const Fooditem = () => {
                   <Flex justify="space-between" className="py-6">
                     <FormLabel>Add Food_Image :</FormLabel>
                     <Input
+                      value={formData.image}
                       type="text"
                       name="image"
                       maxW="400px"
@@ -172,6 +175,7 @@ const Fooditem = () => {
                     <Input
                       type="number"
                       name="pricehalf"
+                      value={formData.pricehalf}
                       maxW="400px"
                       required
                       onChange={inputOnChange}
@@ -189,6 +193,7 @@ const Fooditem = () => {
                       type="text"
                       maxW="400px"
                       required
+                      value={formData.description}
                       name="description"
                       onChange={inputOnChange}
                       m="auto"
