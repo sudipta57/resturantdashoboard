@@ -13,7 +13,7 @@ const foodDataSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  pricehalf: {
+  price: {
     type: Number,
     required: true,
   },

@@ -14,7 +14,7 @@ export async function POST(req, res) {
       name: foodname,
       img: image,
       description: description,
-      pricehalf: `${pricehalf}`,
+      price: `${pricehalf}`,
     };
 
     // Insert the sample data into the FoodData collection
