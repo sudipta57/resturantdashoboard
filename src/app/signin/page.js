@@ -12,6 +12,7 @@ const Signin = () => {
     resturantName: "",
     email: "",
     password: "",
+    secret: "",
   });
 
   const oninputchange = (e) => {
@@ -43,15 +44,38 @@ const Signin = () => {
         password,
       }),
     });
-
-    if (!res.ok) {
-      console.log("eror");
+    const data = await res.json();
+    if (!data.message) {
+      return toast.error(res.error || "error in submiting infos", {
+        position: "top-right",
+        autoClose: 1500,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        transition: Bounce,
+      });
+    } else {
+      toast.success("resturant signed up please login", {
+        position: "top-right",
+        autoClose: 1500,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        transition: Bounce,
+      });
+      setforminfo({
+        resturantName: "",
+        email: "",
+        password: "",
+        secret: "",
+      });
     }
-    setforminfo({
-      resturantName: "",
-      email: "",
-      password: "",
-    });
   };
 
   const HandleLogin = async (e) => {
@@ -167,6 +191,7 @@ const Signin = () => {
               name="secret"
               placeholder="secret code"
               onChange={oninputchange}
+              value={forminfo.secret}
             />
             <button className={styles.button} onClick={SendResturantData}>
               Sign up

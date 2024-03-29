@@ -1,6 +1,9 @@
 import foodData from "@/models/fooditemschema";
+import dbConnect from "@/utils/connection";
 import { NextResponse } from "next/server";
 export async function POST(req, res) {
+  await dbConnect();
+
   try {
     const body = await req.json();
     const { foodcat, foodname, image, pricehalf, description } = body;
