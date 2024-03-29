@@ -170,7 +170,7 @@ const Fooditem = () => {
                   <Flex justify="space-between" className="py-6">
                     <FormLabel>Add Food_Price :</FormLabel>
                     <Input
-                      type="text"
+                      type="number"
                       name="pricehalf"
                       maxW="400px"
                       required
