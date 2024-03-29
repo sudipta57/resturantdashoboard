@@ -4,6 +4,7 @@ import styles from "./signin.module.css";
 import { Bounce, toast } from "react-toastify";
 import { useRouter } from "next/navigation";
 import { loginContext } from "../layout";
+import Loading from "../loading";
 const Signin = () => {
   const router = useRouter();
   const [isChecked, setIsChecked] = useState(false);
@@ -14,7 +15,7 @@ const Signin = () => {
     password: "",
     secret: "",
   });
-
+  const [loading, setloading] = useState(false);
   const oninputchange = (e) => {
     const name = e.target.name;
     const value = e.target.value;
@@ -27,6 +28,7 @@ const Signin = () => {
   //sending the resturantinfos to the backend for saving the infos to the database
   const SendResturantData = async (e) => {
     e.preventDefault();
+    setloading(true);
     const { resturantName, email, password } = forminfo;
     if (!resturantName || !email || !password) {
       return console.log("please fill all data");
@@ -45,6 +47,7 @@ const Signin = () => {
       }),
     });
     const data = await res.json();
+    setloading(false);
     if (!data.message) {
       return toast.error(res.error || "error in submiting infos", {
         position: "top-right",
@@ -140,7 +143,9 @@ const Signin = () => {
     }
   };
 
-  return (
+  return loading ? (
+    <Loading />
+  ) : (
     <div className={styles.body}>
       <div className={styles.main}>
         <input
