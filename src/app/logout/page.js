@@ -7,21 +7,45 @@ import { Bounce, toast } from "react-toastify";
 const Page = () => {
   const router = useRouter();
   const { setIslogin } = useContext(loginContext);
-
-  useEffect(() => {
-    router.push("/signin");
-    toast.success("Resturant Logged out successful", {
-      position: "top-right",
-      autoClose: 1500,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "light",
-      transition: Bounce,
+  const logout = async () => {
+    const res = await fetch("api/logout", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
     });
-    setIslogin(false);
+    const data = await res.json();
+    if (data.message) {
+      router.push("/signin");
+      toast.success("Resturant Logged out successful", {
+        position: "top-right",
+        autoClose: 1500,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        transition: Bounce,
+      });
+      setIslogin(false);
+    } else {
+      toast.error(data.error, {
+        position: "top-right",
+        autoClose: 1500,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        transition: Bounce,
+      });
+    }
+  };
+  useEffect(() => {
+    logout();
   }, []);
 
   return <center>Logggin out</center>;

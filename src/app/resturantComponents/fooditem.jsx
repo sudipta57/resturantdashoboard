@@ -37,6 +37,7 @@ const Fooditem = () => {
     setloading(true);
     const { foodcat, foodname, image, pricehalf, description } = formData;
     if (!foodcat || !foodname || !image || !pricehalf || !description) {
+      setloading(false);
       return toast.error("please fill all the details", {
         position: "top-right",
         autoClose: 1000,

@@ -1,6 +1,5 @@
 "use client";
 import React, { useContext, useState } from "react";
-import styles from "./signin.module.css";
 import { Bounce, toast } from "react-toastify";
 import { useRouter } from "next/navigation";
 import { loginContext } from "../layout";
@@ -146,28 +145,24 @@ const Signin = () => {
   return loading ? (
     <Loading />
   ) : (
-    <div className={styles.body}>
-      <div className={styles.main}>
+    <div className="body">
+      <div className="main">
         <input
-          className={styles.input}
+          className="input"
           type="checkbox"
-          id={styles.chk}
+          id="chk"
           aria-hidden="true"
           checked={isChecked}
           onChange={() => setIsChecked(!isChecked)}
         />
 
-        <div className={styles.signup}>
+        <div className="signup">
           <form>
-            <label
-              className={styles.label}
-              htmlFor={styles.chk}
-              aria-hidden="true"
-            >
+            <label className="label" htmlFor="chk" aria-hidden="true">
               Sign up
             </label>
             <input
-              className={styles.input}
+              className="input"
               type="text"
               name="resturantName"
               value={forminfo.resturantName}
@@ -175,7 +170,7 @@ const Signin = () => {
               onChange={oninputchange}
             />
             <input
-              className={styles.input}
+              className="input"
               type="email"
               name="email"
               placeholder="Email"
@@ -183,7 +178,7 @@ const Signin = () => {
               onChange={oninputchange}
             />
             <input
-              className={styles.input}
+              className="input"
               type="password"
               name="password"
               value={forminfo.password}
@@ -191,43 +186,39 @@ const Signin = () => {
               onChange={oninputchange}
             />
             <input
-              className={styles.input}
+              className="input"
               type="text"
               name="secret"
               placeholder="secret code"
               onChange={oninputchange}
               value={forminfo.secret}
             />
-            <button className={styles.button} onClick={SendResturantData}>
+            <button className="button" onClick={SendResturantData}>
               Sign up
             </button>
           </form>
         </div>
 
-        <div className={styles.login}>
+        <div className="login">
           <form>
-            <label
-              className={styles.label}
-              htmlFor={styles.chk}
-              aria-hidden="true"
-            >
+            <label className="label" htmlFor="chk" aria-hidden="true">
               Login
             </label>
             <input
-              className={styles.input}
+              className="input"
               type="email"
               name="email"
               placeholder="Email"
               onChange={oninputchange}
             />
             <input
-              className={styles.input}
+              className="input"
               type="password"
               name="password"
               placeholder="Password"
               onChange={oninputchange}
             />
-            <button className={styles.button} onClick={HandleLogin}>
+            <button className="button" onClick={HandleLogin}>
               Login
             </button>
           </form>
