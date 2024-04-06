@@ -1,13 +1,12 @@
 "use client";
-import React, { useContext, useState } from "react";
+import { signIn } from "next-auth/react";
+import React, { useState } from "react";
 import { Bounce, toast } from "react-toastify";
 import { useRouter } from "next/navigation";
-import { loginContext } from "../layout";
 import Loading from "../loading";
 const Signin = () => {
   const router = useRouter();
   const [isChecked, setIsChecked] = useState(false);
-  const { setIslogin } = useContext(loginContext);
   const [forminfo, setforminfo] = useState({
     resturantName: "",
     email: "",
@@ -30,7 +29,18 @@ const Signin = () => {
     setloading(true);
     const { resturantName, email, password } = forminfo;
     if (!resturantName || !email || !password) {
-      return console.log("please fill all data");
+      setloading(false);
+      return toast.warn("please fill all the details", {
+        position: "top-right",
+        autoClose: 1500,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        transition: Bounce,
+      });
     }
     const res = await fetch("/api/resturantinfo", {
       method: "POST",
@@ -80,11 +90,75 @@ const Signin = () => {
     }
   };
 
-  const HandleLogin = async (e) => {
-    e.preventDefault();
+  // const HandleLogin = async (e) => {
+  //   e.preventDefault();
+  //   const { email, password } = forminfo;
+  //   if (!email || !password) {
+  //     return toast.warn("please fill all the data", {
+  //       position: "top-right",
+  //       autoClose: 1500,
+  //       hideProgressBar: false,
+  //       closeOnClick: true,
+  //       pauseOnHover: true,
+  //       draggable: true,
+  //       progress: undefined,
+  //       theme: "light",
+  //       transition: Bounce,
+  //     });
+  //   }
+
+  //   try {
+  //     const res = await fetch("api/login", {
+  //       method: "POST",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //       credentials: "include",
+  //       body: JSON.stringify({
+  //         email: email,
+  //         password: password,
+  //       }),
+  //     });
+  //     const data = await res.json();
+  //     if (data.message) {
+  //       router.push("/dashboard");
+  //       setIslogin(true);
+  //       return toast("Resturant Logged in successful", {
+  //         position: "top-right",
+  //         autoClose: 1500,
+  //         hideProgressBar: false,
+  //         closeOnClick: true,
+  //         pauseOnHover: true,
+  //         draggable: true,
+  //         progress: undefined,
+  //         theme: "light",
+  //         transition: Bounce,
+  //       });
+  //     } else {
+  //       toast.error(data.error, {
+  //         position: "top-right",
+  //         autoClose: 1500,
+  //         hideProgressBar: false,
+  //         closeOnClick: true,
+  //         pauseOnHover: true,
+  //         draggable: true,
+  //         progress: undefined,
+  //         theme: "light",
+  //         transition: Bounce,
+  //       });
+  //     }
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
+  // Function to handle form submission
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    setloading(true);
     const { email, password } = forminfo;
     if (!email || !password) {
-      return toast.warn("please fill all the data", {
+      setloading(false);
+      return toast.warn("please fill all the details", {
         position: "top-right",
         autoClose: 1500,
         hideProgressBar: false,
@@ -96,52 +170,43 @@ const Signin = () => {
         transition: Bounce,
       });
     }
+    // Sign in using the 'credentials' provider
+    const result = await signIn("credentials", {
+      redirect: false, // Set to true if you want to redirect the user to another page upon success
+      email,
+      password,
+    });
+    if (result.status == 200) {
+      setloading(false);
 
-    try {
-      const res = await fetch("api/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        credentials: "include",
-        body: JSON.stringify({
-          email: email,
-          password: password,
-        }),
+      router.push("/dashboard");
+      return toast("Resturant Logged in successful", {
+        position: "top-right",
+        autoClose: 1500,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        transition: Bounce,
       });
-      const data = await res.json();
-      if (data.message) {
-        router.push("/dashboard");
-        setIslogin(true);
-        return toast("Resturant Logged in successful", {
-          position: "top-right",
-          autoClose: 1500,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
-          transition: Bounce,
-        });
-      } else {
-        toast.error(data.error, {
-          position: "top-right",
-          autoClose: 1500,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
-          transition: Bounce,
-        });
-      }
-    } catch (error) {
-      console.log(error);
+    }
+    if (result.error) {
+      setloading(false);
+      return toast.error("User not registered", {
+        position: "top-right",
+        autoClose: 1500,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        transition: Bounce,
+      });
     }
   };
-
   return loading ? (
     <Loading />
   ) : (
@@ -218,7 +283,7 @@ const Signin = () => {
               placeholder="Password"
               onChange={oninputchange}
             />
-            <button className="button" onClick={HandleLogin}>
+            <button className="button" onClick={handleSubmit}>
               Login
             </button>
           </form>

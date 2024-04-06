@@ -1,13 +1,11 @@
 "use client";
-import React, { useContext } from "react";
 import Link from "next/link";
 
 import { Text, Box } from "@chakra-ui/react";
-import { loginContext } from "../layout";
+import { useSession } from "next-auth/react";
 
 const Nav = () => {
-  const { islogin, setIslogin } = useContext(loginContext);
-
+  const { data: session, status } = useSession();
   const NavItem = ({ href, button, children }) => {
     const defaultClasses =
       "p-4 cursor-pointer hover:text-white hover:transition hover:bg-black hover:rounded-md";
@@ -30,7 +28,7 @@ const Nav = () => {
             <div className="flex space-x-6 font-bold w-50%">
               <NavItem href="/dashboard">Dashboard</NavItem>
               <NavItem href="/addItem">Add Food</NavItem>
-              {islogin ? (
+              {status == "authenticated" ? (
                 <NavItem href="/logout">Log out</NavItem>
               ) : (
                 <NavItem href="/signin">Sign in</NavItem>

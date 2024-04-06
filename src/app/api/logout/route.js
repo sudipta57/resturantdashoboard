@@ -1,16 +1,14 @@
-"use server";
-import { cookies } from "next/headers";
+import { signOut } from "next-auth/react";
 import { NextResponse } from "next/server";
-
 export async function GET(req, res) {
-  const deleteCookie = cookies().delete("authtoken");
-  console.log(deleteCookie);
-  if (!deleteCookie) {
+  // Server-side handling of the sign-out event
+  const signedout = await signOut({ req, res, callbackUrl: "/signin" });
+  if (signedout) {
     return NextResponse.json(
-      { message: "Log out successfull" },
+      { message: "Loggedout successful" },
       { status: 200 }
     );
   } else {
-    return NextResponse.json({ error: "error in logout" }, { status: 401 });
+    return NextResponse.json({ error: "Eror in logout" }, { status: 400 });
   }
 }
