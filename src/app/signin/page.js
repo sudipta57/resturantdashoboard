@@ -153,7 +153,7 @@ const Signin = () => {
     <Loading />
   ) : (
     <div className="body">
-      {status === "authenticated" ? (
+      {status === "unauthenticated" ? (
         <div className="main">
           <input
             className="input"
