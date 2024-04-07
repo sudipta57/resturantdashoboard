@@ -1,11 +1,12 @@
 "use client";
-import { signIn } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 import React, { useState } from "react";
 import { Bounce, toast } from "react-toastify";
 import { useRouter } from "next/navigation";
 import Loading from "../loading";
-import dbConnect from "@/utils/connection";
+import Link from "next/link";
 const Signin = () => {
+  const { status } = useSession();
   const router = useRouter();
   const [isChecked, setIsChecked] = useState(false);
   const [forminfo, setforminfo] = useState({
@@ -152,84 +153,93 @@ const Signin = () => {
     <Loading />
   ) : (
     <div className="body">
-      <div className="main">
-        <input
-          className="input"
-          type="checkbox"
-          id="chk"
-          aria-hidden="true"
-          checked={isChecked}
-          onChange={() => setIsChecked(!isChecked)}
-        />
+      {status === "authenticated" ? (
+        <div className="main">
+          <input
+            className="input"
+            type="checkbox"
+            id="chk"
+            aria-hidden="true"
+            checked={isChecked}
+            onChange={() => setIsChecked(!isChecked)}
+          />
 
-        <div className="signup">
-          <form>
-            <label className="label" htmlFor="chk" aria-hidden="true">
-              Sign up
-            </label>
-            <input
-              className="input"
-              type="text"
-              name="resturantName"
-              value={forminfo.resturantName}
-              placeholder="Resturant name"
-              onChange={oninputchange}
-            />
-            <input
-              className="input"
-              type="email"
-              name="email"
-              placeholder="Email"
-              value={forminfo.email}
-              onChange={oninputchange}
-            />
-            <input
-              className="input"
-              type="password"
-              name="password"
-              value={forminfo.password}
-              placeholder="Password"
-              onChange={oninputchange}
-            />
-            <input
-              className="input"
-              type="text"
-              name="secret"
-              placeholder="secret code"
-              onChange={oninputchange}
-              value={forminfo.secret}
-            />
-            <button className="button" onClick={SendResturantData}>
-              Sign up
-            </button>
-          </form>
-        </div>
+          <div className="signup">
+            <form>
+              <label className="label" htmlFor="chk" aria-hidden="true">
+                Sign up
+              </label>
+              <input
+                className="input"
+                type="text"
+                name="resturantName"
+                value={forminfo.resturantName}
+                placeholder="Resturant name"
+                onChange={oninputchange}
+              />
+              <input
+                className="input"
+                type="email"
+                name="email"
+                placeholder="Email"
+                value={forminfo.email}
+                onChange={oninputchange}
+              />
+              <input
+                className="input"
+                type="password"
+                name="password"
+                value={forminfo.password}
+                placeholder="Password"
+                onChange={oninputchange}
+              />
+              <input
+                className="input"
+                type="text"
+                name="secret"
+                placeholder="secret code"
+                onChange={oninputchange}
+                value={forminfo.secret}
+              />
+              <button className="button" onClick={SendResturantData}>
+                Sign up
+              </button>
+            </form>
+          </div>
 
-        <div className="login">
-          <form>
-            <label className="label" htmlFor="chk" aria-hidden="true">
-              Login
-            </label>
-            <input
-              className="input"
-              type="email"
-              name="email"
-              placeholder="Email"
-              onChange={oninputchange}
-            />
-            <input
-              className="input"
-              type="password"
-              name="password"
-              placeholder="Password"
-              onChange={oninputchange}
-            />
-            <button className="button" onClick={handleSubmit}>
-              Login
-            </button>
-          </form>
+          <div className="login">
+            <form>
+              <label className="label" htmlFor="chk" aria-hidden="true">
+                Login
+              </label>
+              <input
+                className="input"
+                type="email"
+                name="email"
+                placeholder="Email"
+                onChange={oninputchange}
+              />
+              <input
+                className="input"
+                type="password"
+                name="password"
+                placeholder="Password"
+                onChange={oninputchange}
+              />
+              <button className="button" onClick={handleSubmit}>
+                Login
+              </button>
+            </form>
+          </div>
         </div>
-      </div>
+      ) : (
+        <Link
+          href="/dashboard"
+          className="text-white text-3xl bg-slate-900 rounded-md p-2"
+        >
+          Go to dashboard
+        </Link>
+      )}
     </div>
   );
 };
