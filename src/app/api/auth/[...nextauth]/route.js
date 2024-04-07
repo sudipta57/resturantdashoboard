@@ -54,6 +54,7 @@ const handler = NextAuth(authOptions);
 export { handler as GET, handler as POST };
 
 async function findUserByEmail(email) {
+  await dbConnect();
   const userxist = await ResturantInfo.findOne({ email });
   return userxist;
 }
