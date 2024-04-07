@@ -90,67 +90,6 @@ const Signin = () => {
     }
   };
 
-  // const HandleLogin = async (e) => {
-  //   e.preventDefault();
-  //   const { email, password } = forminfo;
-  //   if (!email || !password) {
-  //     return toast.warn("please fill all the data", {
-  //       position: "top-right",
-  //       autoClose: 1500,
-  //       hideProgressBar: false,
-  //       closeOnClick: true,
-  //       pauseOnHover: true,
-  //       draggable: true,
-  //       progress: undefined,
-  //       theme: "light",
-  //       transition: Bounce,
-  //     });
-  //   }
-
-  //   try {
-  //     const res = await fetch("api/login", {
-  //       method: "POST",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //       credentials: "include",
-  //       body: JSON.stringify({
-  //         email: email,
-  //         password: password,
-  //       }),
-  //     });
-  //     const data = await res.json();
-  //     if (data.message) {
-  //       router.push("/dashboard");
-  //       setIslogin(true);
-  //       return toast("Resturant Logged in successful", {
-  //         position: "top-right",
-  //         autoClose: 1500,
-  //         hideProgressBar: false,
-  //         closeOnClick: true,
-  //         pauseOnHover: true,
-  //         draggable: true,
-  //         progress: undefined,
-  //         theme: "light",
-  //         transition: Bounce,
-  //       });
-  //     } else {
-  //       toast.error(data.error, {
-  //         position: "top-right",
-  //         autoClose: 1500,
-  //         hideProgressBar: false,
-  //         closeOnClick: true,
-  //         pauseOnHover: true,
-  //         draggable: true,
-  //         progress: undefined,
-  //         theme: "light",
-  //         transition: Bounce,
-  //       });
-  //     }
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
   // Function to handle form submission
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -206,6 +145,7 @@ const Signin = () => {
         transition: Bounce,
       });
     }
+    setloading(false);
   };
   return loading ? (
     <Loading />
