@@ -1,4 +1,5 @@
 import ResturantInfo from "@/models/resturantinfo";
+import dbConnect from "@/utils/connection";
 import NextAuth from "next-auth/next";
 import CredentialsProvider from "next-auth/providers/credentials";
 
@@ -53,6 +54,6 @@ const handler = NextAuth(authOptions);
 export { handler as GET, handler as POST };
 
 async function findUserByEmail(email) {
-  const userxist = ResturantInfo.findOne({ email });
+  const userxist = await ResturantInfo.findOne({ email });
   return userxist;
 }
